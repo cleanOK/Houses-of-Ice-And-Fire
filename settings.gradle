@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name = "Houses Of Ice & Fire"
