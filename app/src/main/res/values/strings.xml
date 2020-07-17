@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Houses Of Ice &amp; Fire</string>
     <string name="title_item_detail">Item Detail</string>
+    <string name="no_internet">No internet connection</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="server_error">Server error</string>
 </resources>
