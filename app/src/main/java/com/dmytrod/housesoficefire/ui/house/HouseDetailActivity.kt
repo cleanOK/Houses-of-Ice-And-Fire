@@ -4,8 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
+import androidx.lifecycle.Observer
 import com.dmytrod.housesoficefire.R
+import com.dmytrod.housesoficefire.domain.Result
+import com.dmytrod.housesoficefire.presentation.viewmodel.HouseDetailViewModel
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_item_detail.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 /**
  * An activity representing a single Item detail screen. This
@@ -15,6 +21,10 @@ import com.dmytrod.housesoficefire.R
  */
 class HouseDetailActivity : AppCompatActivity() {
 
+    private val houseDetailViewModel by viewModel<HouseDetailViewModel> {
+        parametersOf(intent.getStringExtra(ARG_HOUSE_URL))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_detail)
@@ -22,29 +32,16 @@ class HouseDetailActivity : AppCompatActivity() {
 
         // Show the Up button in the action bar.
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        // savedInstanceState is non-null when there is fragment state
-        // saved from previous configurations of this activity
-        // (e.g. when rotating the screen from portrait to landscape).
-        // In this case, the fragment will automatically be re-added
-        // to its container so we don"t need to manually add it.
-        // For more information, see the Fragments API guide at:
-        //
-        // http://developer.android.com/guide/components/fragments.html
-        //
-        if (savedInstanceState == null) {
-            // Create the detail fragment and add it to the activity
-            // using a fragment transaction.
-            val fragment = HouseDetailFragment().apply {
-                arguments = bundleOf(
-                    HouseDetailFragment.ARG_ITEM_ID to intent.getStringExtra(HouseDetailFragment.ARG_ITEM_ID)
-                )
+        houseDetailViewModel.houseDetails.observe(this, Observer {
+            when (it) {
+                is Result.Success -> {
+                    name.text = it.data.name
+                }
+                is Result.Failure -> {
+                    Snackbar.make(root, it.errorMessageRes, Snackbar.LENGTH_SHORT).show()
+                }
             }
-
-            supportFragmentManager.beginTransaction()
-                .add(R.id.item_detail_container, fragment)
-                .commit()
-        }
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem) =
@@ -58,9 +55,12 @@ class HouseDetailActivity : AppCompatActivity() {
                 // http://developer.android.com/design/patterns/navigation.html#up-vs-back
 
                 navigateUpTo(Intent(this, HouseListActivity::class.java))
-
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+
+    companion object {
+        const val ARG_HOUSE_URL = "house_url"
+    }
 }

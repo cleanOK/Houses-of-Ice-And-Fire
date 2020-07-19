@@ -9,7 +9,7 @@ import com.dmytrod.housesoficefire.domain.entity.HouseEntity
 import com.dmytrod.housesoficefire.domain.interactor.FlowInteractor
 import kotlinx.coroutines.flow.collect
 
-class HouseViewModel(private val getHouseList: FlowInteractor<Unit, List<HouseEntity>>) :
+class HouseListViewModel(private val getHouseList: FlowInteractor<Unit, List<HouseEntity>>) :
     ViewModel() {
     val houseList = liveData<HouseListState> {
         emit(HouseListState.Loading)
@@ -22,12 +22,13 @@ class HouseViewModel(private val getHouseList: FlowInteractor<Unit, List<HouseEn
     }
     val isLoading = houseList.map { it is HouseListState.Loading }
 
+
+
     sealed class HouseListState {
         object Loading : HouseListState()
         data class Success(val list: List<HouseEntity>) : HouseListState()
         data class Error(@StringRes val errorMessageRes: Int, var isHandled: Boolean = false) :
             HouseListState()
-
         //TODO
 //        object Empty: HouseListState()
     }

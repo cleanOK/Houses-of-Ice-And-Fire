@@ -9,15 +9,13 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.os.bundleOf
-import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dmytrod.housesoficefire.R
 import com.dmytrod.housesoficefire.domain.entity.HouseEntity
-import com.dmytrod.housesoficefire.presentation.viewmodel.HouseViewModel
+import com.dmytrod.housesoficefire.presentation.viewmodel.HouseListViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_item_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -32,27 +30,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 class HouseListActivity : AppCompatActivity() {
 
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
-    private var twoPane: Boolean = false
-    private val houseViewModel by viewModel<HouseViewModel>()
+    private val houseViewModel by viewModel<HouseListViewModel>()
     private val houseAdapter = SimpleItemRecyclerViewAdapter {
-        if (twoPane) {
-            val fragment = HouseDetailFragment()
-                .apply {
-                    arguments = bundleOf(HouseDetailFragment.ARG_ITEM_ID to it.url)
-                }
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.item_detail_container, fragment)
-                .commit()
-        } else {
             val intent = Intent(this, HouseDetailActivity::class.java)
-                .putExtra(HouseDetailFragment.ARG_ITEM_ID, it.url)
+                .putExtra(HouseDetailActivity.ARG_HOUSE_URL, it.url)
             startActivity(intent)
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,20 +45,12 @@ class HouseListActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         toolbar.title = title
 
-        if (findViewById<NestedScrollView>(R.id.item_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-w900dp).
-            // If this view is present, then the
-            // activity should be in two-pane mode.
-            twoPane = true
-        }
-
         val list = findViewById<RecyclerView>(R.id.item_list)
         list.adapter = houseAdapter
         houseViewModel.houseList.observe(this, Observer {
             when (it) {
-                is HouseViewModel.HouseListState.Success -> houseAdapter.submitList(it.list)
-                is HouseViewModel.HouseListState.Error -> handleError(it)
+                is HouseListViewModel.HouseListState.Success -> houseAdapter.submitList(it.list)
+                is HouseListViewModel.HouseListState.Error -> handleError(it)
             }
         })
         houseViewModel.isLoading.observe(this, Observer {
@@ -87,7 +61,7 @@ class HouseListActivity : AppCompatActivity() {
 
     }
 
-    private fun handleError(error: HouseViewModel.HouseListState.Error) {
+    private fun handleError(error: HouseListViewModel.HouseListState.Error) {
         if (!error.isHandled) {
             Snackbar.make(root, error.errorMessageRes, Snackbar.LENGTH_SHORT)
                 .show()
@@ -107,13 +81,11 @@ class HouseListActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val item = getItem(position)
-            holder.idView.text = item.name
             holder.contentView.text = item.name
             holder.itemView.setOnClickListener { onItemClick.invoke(item) }
         }
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val idView: TextView = view.findViewById(R.id.id_text)
             val contentView: TextView = view.findViewById(R.id.content)
         }
 

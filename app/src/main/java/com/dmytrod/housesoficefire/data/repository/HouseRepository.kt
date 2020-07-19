@@ -22,10 +22,13 @@ class HouseRepository(
             responseHandler.handleException(e)
         }
 
-    override suspend fun loadAllFromDB(): Flow<List<HouseDBModel>> =
+    override fun loadAllFromDB(): Flow<List<HouseDBModel>> =
         iceAndFireDatabase.houseDao().getAll()
 
     override suspend fun saveToDB(data: List<HouseResponse>) {
         iceAndFireDatabase.houseDao().insert(data.map { HouseDBModel.from(it) })
     }
+
+    override fun loadFromDBByUrl(param: String): Flow<HouseDBModel> =
+        iceAndFireDatabase.houseDao().getByUrl(param)
 }

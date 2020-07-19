@@ -12,5 +12,5 @@ abstract class HouseDao : BaseDao<HouseDBModel>() {
     abstract fun getAll(): Flow<List<HouseDBModel>>
 
     @Query("SELECT * FROM ${HouseDBModel.TABLE_NAME} WHERE url = :url")
-    abstract suspend fun getByUrl(url: String): HouseDBModel?
+    abstract fun getByUrl(url: String): Flow<HouseDBModel>
 }
