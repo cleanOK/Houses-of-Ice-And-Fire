@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dmytrod.housesoficefire.R
@@ -47,6 +48,7 @@ class HouseListActivity : AppCompatActivity() {
 
         val list = findViewById<RecyclerView>(R.id.item_list)
         list.adapter = houseAdapter
+        list.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         houseViewModel.houseList.observe(this, Observer {
             when (it) {
                 is HouseListViewModel.HouseListState.Success -> houseAdapter.submitList(it.list)

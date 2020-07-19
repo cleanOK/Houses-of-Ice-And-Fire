@@ -8,11 +8,8 @@ import androidx.lifecycle.Observer
 import com.dmytrod.housesoficefire.R
 import com.dmytrod.housesoficefire.domain.Result
 import com.dmytrod.housesoficefire.presentation.viewmodel.HouseDetailViewModel
-import com.dmytrod.housesoficefire.presentation.viewmodel.HouseListViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_item_detail.*
-import kotlinx.android.synthetic.main.activity_item_detail.root
-import kotlinx.android.synthetic.main.activity_item_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -38,7 +35,7 @@ class HouseDetailActivity : AppCompatActivity() {
         houseDetailViewModel.houseDetails.observe(this, Observer {
             when (it) {
                 is Result.Success -> {
-                    supportActionBar?.title = it.data.name
+                    toolbar_layout.title = it.data.name
                     words.text = it.data.words
                     coatOfArms.text = it.data.coatOfArms
                     region.text = it.data.region
