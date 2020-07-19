@@ -1,3 +1,5 @@
+package com.dmytrod.housesoficefire.data.remote
+
 import com.dmytrod.housesoficefire.data.remote.model.RemoteError
 import java.io.IOException
 import java.net.SocketTimeoutException

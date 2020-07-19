@@ -1,7 +1,7 @@
 package com.dmytrod.housesoficefire.data
 
-import IResponseHandler
-import ResponseHandler
+import com.dmytrod.housesoficefire.data.remote.IResponseHandler
+import com.dmytrod.housesoficefire.data.remote.ResponseHandler
 import android.content.Context
 import androidx.room.Room
 import com.dmytrod.housesoficefire.BuildConfig
@@ -24,7 +24,7 @@ val dataModule = module {
 }
 
 private fun createIceAndFireApi(): IceAndFireApi = Retrofit.Builder()
-    .baseUrl("https://anapioficeandfire.com/api")
+    .baseUrl("https://anapioficeandfire.com/api/")
     .addConverterFactory(GsonConverterFactory.create())
     .client(createClient())
     .build()

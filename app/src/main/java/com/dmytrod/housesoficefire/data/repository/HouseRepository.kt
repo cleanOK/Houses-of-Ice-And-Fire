@@ -1,6 +1,6 @@
 package com.dmytrod.housesoficefire.data.repository
 
-import IResponseHandler
+import com.dmytrod.housesoficefire.data.remote.IResponseHandler
 import com.dmytrod.housesoficefire.data.db.IceAndFireDatabase
 import com.dmytrod.housesoficefire.data.db.model.HouseDBModel
 import com.dmytrod.housesoficefire.data.remote.IceAndFireApi

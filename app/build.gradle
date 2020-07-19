@@ -30,8 +30,8 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures {
-        dataBinding=true
+    dataBinding {
+        enabled = true
     }
 }
 
@@ -63,6 +63,8 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    implementation 'org.conscrypt:conscrypt-android:2.2.1'
+
 
     // Kotlin
     implementation "org.koin:koin-android:$koin_version"

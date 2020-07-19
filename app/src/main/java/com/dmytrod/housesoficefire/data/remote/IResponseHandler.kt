@@ -1,3 +1,5 @@
+package com.dmytrod.housesoficefire.data.remote
+
 import com.dmytrod.housesoficefire.data.remote.model.RemoteError
 
 interface IResponseHandler {
