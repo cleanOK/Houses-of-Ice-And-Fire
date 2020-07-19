@@ -22,8 +22,6 @@ class HouseListViewModel(private val getHouseList: FlowInteractor<Unit, List<Hou
     }
     val isLoading = houseList.map { it is HouseListState.Loading }
 
-
-
     sealed class HouseListState {
         object Loading : HouseListState()
         data class Success(val list: List<HouseEntity>) : HouseListState()

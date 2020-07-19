@@ -12,10 +12,42 @@ data class HouseDBModel(
     @ColumnInfo(name = "url")
     val url: String,
     @ColumnInfo(name = "name")
-    val name: String
+    val name: String,
+    @ColumnInfo(name = "words")
+    val words: String,
+    @ColumnInfo(name = "coatOfArms")
+    val coatOfArms: String,
+    @ColumnInfo(name = "region")
+    val region: String,
+    @ColumnInfo(name = "currentLord")
+    val currentLord: String,
+    @ColumnInfo(name = "diedOut")
+    val diedOut: String,
+    @ColumnInfo(name = "founded")
+    val founded: String,
+    @ColumnInfo(name = "founder")
+    val founder: String,
+    @ColumnInfo(name = "heir")
+    val heir: String,
+    @ColumnInfo(name = "overlord")
+    val overlord: String
 ) {
     companion object {
         const val TABLE_NAME = "movie"
-        fun from(houseResponse: HouseResponse) = HouseDBModel(houseResponse.url, houseResponse.name)
+        fun from(houseResponse: HouseResponse): HouseDBModel = with(houseResponse) {
+            HouseDBModel(
+                url,
+                name,
+                words,
+                coatOfArms,
+                region,
+                currentLord,
+                diedOut,
+                founded,
+                founder,
+                heir,
+                overlord
+            )
+        }
     }
 }

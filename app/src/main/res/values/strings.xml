@@ -4,4 +4,7 @@
     <string name="no_internet">No internet connection</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="server_error">Server error</string>
+    <string name="words">Words</string>
+    <string name="coat_of_arms">Coat of arms</string>
+    <string name="region">Region</string>
 </resources>

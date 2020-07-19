@@ -2,9 +2,9 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/root"
     android:fitsSystemWindows="true"
     tools:context=".ui.house.HouseDetailActivity"
     tools:ignore="MergeRootFrame">
@@ -41,10 +41,53 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <TextView
-            android:id="@+id/name"
+
+        <GridLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:columnCount="2">
+
+            <TextView
+                style="@style/TextView.Label"
+                android:layout_width="@dimen/label_width"
+                android:layout_height="wrap_content"
+                android:text="@string/words" />
+
+            <TextView
+                android:id="@+id/words"
+                style="@style/TextView.Caption"
+                android:layout_width="0dp"
+                android:layout_gravity="fill_horizontal"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                style="@style/TextView.Label"
+                android:layout_width="@dimen/label_width"
+                android:layout_height="wrap_content"
+                android:text="@string/coat_of_arms" />
+
+            <TextView
+                android:id="@+id/coatOfArms"
+                style="@style/TextView.Caption"
+                android:layout_width="0dp"
+                android:layout_gravity="fill_horizontal"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                style="@style/TextView.Label"
+                android:layout_width="@dimen/label_width"
+                android:layout_height="wrap_content"
+                android:text="@string/region" />
+
+            <TextView
+                android:id="@+id/region"
+                style="@style/TextView.Caption"
+                android:layout_width="0dp"
+                android:layout_gravity="fill_horizontal"
+                android:layout_height="wrap_content" />
+
+
+        </GridLayout>
     </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

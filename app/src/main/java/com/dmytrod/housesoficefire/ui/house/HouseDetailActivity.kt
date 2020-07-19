@@ -8,8 +8,11 @@ import androidx.lifecycle.Observer
 import com.dmytrod.housesoficefire.R
 import com.dmytrod.housesoficefire.domain.Result
 import com.dmytrod.housesoficefire.presentation.viewmodel.HouseDetailViewModel
+import com.dmytrod.housesoficefire.presentation.viewmodel.HouseListViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_item_detail.*
+import kotlinx.android.synthetic.main.activity_item_detail.root
+import kotlinx.android.synthetic.main.activity_item_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -28,14 +31,17 @@ class HouseDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_detail)
-        setSupportActionBar(findViewById(R.id.detail_toolbar))
+        setSupportActionBar(detail_toolbar)
 
         // Show the Up button in the action bar.
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         houseDetailViewModel.houseDetails.observe(this, Observer {
             when (it) {
                 is Result.Success -> {
-                    name.text = it.data.name
+                    supportActionBar?.title = it.data.name
+                    words.text = it.data.words
+                    coatOfArms.text = it.data.coatOfArms
+                    region.text = it.data.region
                 }
                 is Result.Failure -> {
                     Snackbar.make(root, it.errorMessageRes, Snackbar.LENGTH_SHORT).show()
